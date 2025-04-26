@@ -1,0 +1,42 @@
+[
+  {
+    "name": "ChatGPT",
+    "title": "AI chatbot for conversation & productivity",
+    "description": "Use ChatGPT for writing, coding, idea generation, and more.",
+    "banner": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "Claude AI",
+    "title": "Advanced AI assistant by Anthropic",
+    "description": "Great for writing long-form content and deep conversations.",
+    "banner": "https://upload.wikimedia.org/wikipedia/commons/2/21/Claude_logo.png",
+    "pricing": "Free",
+    "platform": "Website"
+  },
+  {
+    "name": "Perplexity AI",
+    "title": "AI-powered research and answering tool",
+    "description": "Search with AI, get citation-backed answers instantly.",
+    "banner": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Perplexity_logo.png",
+    "pricing": "Free",
+    "platform": "Website"
+  },
+  {
+    "name": "Copy.ai",
+    "title": "AI writing assistant for marketing content",
+    "description": "Generate emails, blogs, and ads with one click.",
+    "banner": "https://images.charome.com/copyai.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "Tome",
+    "title": "AI storytelling and presentation builder",
+    "description": "Create stunning AI-powered presentations in minutes.",
+    "banner": "https://images.charome.com/tome.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  }
+]

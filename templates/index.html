@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Tools Directory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: #f9f9f9; 
+    }
+    .brand-header {
+      background-color: #ff0000;
+      color: white;
+      height: 60px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .brand-name {
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+    .directory-title {
+      font-family: 'Courier New', monospace;
+      margin-left: 10px;
+      color: #ffdd00;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+    .category-select { 
+      margin-bottom: 10px; 
+    }
+    .category-select label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    #category {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .filters { 
+      margin-bottom: 10px; 
+    }
+    #tool-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .tool-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 280px;
+      height: 120px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .tool-card:hover {
+      transform: translateY(-5px);
+    }
+    .tool-card img {
+      width: 100%;
+      height: 70px;
+      object-fit: cover;
+    }
+    .tool-card div {
+      padding: 8px;
+      font-size: 14px;
+    }
+    .tool-detail {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 200;
+      padding: 20px;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+    .tool-detail-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .tool-detail img {
+      max-width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      background: #eee;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      z-index: 201;
+    }
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      background: #eee;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      z-index: 201;
+    }
+    .detail-section {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    @media (max-width: 768px) {
+      .tool-card { 
+        width: 100%;
+        max-width: 350px;
+      }
+      .tool-detail-content { 
+        padding: 10px; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-header">
+    <span class="brand-name">AInovate Pro</span>
+    <span class="directory-title">AI Tools Directory</span>
+  </div>
+
+  <div class="header">
+    <div class="category-select">
+      <label for="category">Choose Category:</label>
+      <select id="category"></select>
+    </div>
+
+    
+    <div class="search-bar" style="margin-top: 10px; position: relative;">
+      <input type="text" id="search-input" placeholder="Search AI category..." style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+      <ul id="suggestions" style="position: absolute; background: white; border: 1px solid #ccc; list-style: none; padding: 0; margin: 0; width: 100%; z-index: 10;"></ul>
+    </div>
+
+    <div class="filters">
+      <strong>Pricing:</strong>
+      <label><input type="checkbox" name="pricing" value="free"> Free</label>
+      <label><input type="checkbox" name="pricing" value="paid"> Paid</label>
+      <label><input type="checkbox" name="pricing" value="freemium"> Freemium</label>
+      <br><br>
+      <strong>Platform:</strong>
+      <label><input type="checkbox" name="platform" value="website"> Website</label>
+      <label><input type="checkbox" name="platform" value="app"> App</label>
+      <label><input type="checkbox" name="platform" value="github"> GitHub</label>
+      <label><input type="checkbox" name="platform" value="huggingface"> Hugging Face</label>
+      <label><input type="checkbox" name="platform" value="ios"> iOS</label>
+    </div>
+  </div>
+
+  <div id="tool-list"></div>
+
+  <div id="tool-detail" class="tool-detail">
+    <span class="back-btn" id="back-btn">←</span>
+    <span class="close-btn">&times;</span>
+    <div class="tool-detail-content" id="detail-content"></div>
+  </div>
+
+  <script>
+    let categories = [];
+    let allTools = [];
+    let historyState = {
+      isDetailView: false,
+      scrollPosition: 0
+    };
+
+    // Handle browser back button
+    window.addEventListener('popstate', function(event) {
+      if (historyState.isDetailView) {
+        closeDetailView();
+      }
+    });
+
+    async function loadCategories() {
+      const res = await fetch('/get_categories');
+      categories = await res.json();
+      const select = document.getElementById('category');
+      select.innerHTML = '';
+      
+      // Track if "Newest AI" exists in the categories
+      let newestAiExists = false;
+      let newestAiValue = '';
+      
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat.replace(/_/g, ' ');
+        
+        // Check if this category is "Newest AI" (case insensitive)
+        if (cat.toLowerCase() === 'newest_ai' || 
+            cat.toLowerCase() === 'newest ai' || 
+            cat.replace(/_/g, ' ').toLowerCase() === 'newest ai') {
+          newestAiExists = true;
+          newestAiValue = cat;
+          opt.selected = true; // Pre-select this option
+        }
+        
+        select.appendChild(opt);
+      });
+      
+      // After populating the dropdown
+      select.addEventListener('change', loadTools);
+      
+      // If "Newest AI" exists, set it as the selected value
+      if (newestAiExists) {
+        select.value = newestAiValue;
+      }
+      
+      // Load tools based on the selected category
+      loadTools();
+    }
+
+    async function loadTools() {
+      const category = document.getElementById('category').value;
+      const pricing = Array.from(document.querySelectorAll('input[name="pricing"]:checked')).map(c => c.value.toLowerCase());
+      const platform = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(c => c.value.toLowerCase());
+
+      const res = await fetch(`/get_tools?category=${category}`);
+      allTools = await res.json();
+
+      let tools = allTools.filter(tool =>
+        (!pricing.length || pricing.includes(tool.pricing.toLowerCase())) &&
+        (!platform.length || platform.includes(tool.platform.toLowerCase()))
+      );
+
+      tools.reverse();
+      const list = document.getElementById('tool-list');
+      list.innerHTML = '';
+      tools.forEach(tool => {
+        const div = document.createElement('div');
+        div.className = 'tool-card';
+        div.innerHTML = `
+          <img src="${tool.banner}" alt="${tool.name}" onerror="this.src='https://via.placeholder.com/280x70?text=No+Image'">
+          <div><strong>${tool.name}</strong><br>${tool.title}</div>
+        `;
+        div.addEventListener('click', () => showToolDetail(tool));
+        list.appendChild(div);
+      });
+    }
+
+    function showToolDetail(tool) {
+      // Save scroll position before opening detail view
+      historyState.scrollPosition = window.scrollY;
+      historyState.isDetailView = true;
+      window.history.pushState(historyState, '', `#${tool.name.toLowerCase().replace(/ /g, '-')}`);
+
+      const detailDiv = document.getElementById('tool-detail');
+      const contentDiv = document.getElementById('detail-content');
+      
+      contentDiv.innerHTML = `
+        <div class="detail-section">
+          <h1>${tool.name}</h1>
+          <h3>${tool.title}</h3>
+          <img src="${tool.banner}" alt="${tool.name}" onerror="this.src='https://via.placeholder.com/800x300?text=No+Image'">
+        </div>
+        
+        <div class="detail-section">
+          <h4>Description</h4>
+          <p>${tool.description}</p>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Details</h4>
+          <p><strong>Pricing:</strong> ${tool.pricing}</p>
+          <p><strong>Platform:</strong> ${tool.platform}</p>
+          <p><strong>Uses:</strong> ${tool.uses}</p>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Links</h4>
+          <p><a href="${tool.site_link}" target="_blank">Visit Website</a></p>
+          ${tool.tutorial_link ? `<p><a href="${tool.tutorial_link}" target="_blank">Tutorial Video</a></p>` : ''}
+        </div>
+      `;
+      
+      detailDiv.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetailView() {
+      document.getElementById('tool-detail').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      window.scrollTo(0, historyState.scrollPosition);
+      historyState.isDetailView = false;
+      window.history.pushState(historyState, '', window.location.pathname);
+    }
+
+    // Close buttons
+    document.querySelector('.close-btn').addEventListener('click', closeDetailView);
+    document.getElementById('back-btn').addEventListener('click', closeDetailView);
+
+    // Close when clicking outside content
+    document.getElementById('tool-detail').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('tool-detail')) {
+        closeDetailView();
+      }
+    });
+
+    // Checkbox change triggers tool reload
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb =>
+      cb.addEventListener('change', loadTools)
+    );
+
+    // Initialize
+    loadCategories();
+  </script>
+
+
+<script>
+  const searchInput = document.createElement('script');
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchBox = document.getElementById('search-input');
+    const suggestionBox = document.getElementById('suggestions');
+    searchBox.addEventListener('input', async () => {
+      const query = searchBox.value.trim().toLowerCase();
+      suggestionBox.innerHTML = '';
+      if (query.length === 0) return;
+
+      const res = await fetch(`/search_suggestions?query=${query}`);
+      const suggestions = await res.json();
+
+      suggestions.forEach(file => {
+        const item = document.createElement('li');
+        item.textContent = file.replace(/_/g, ' ').replace(/\.json$/, '');
+        item.style.padding = '10px';
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+          searchBox.value = '';
+          suggestionBox.innerHTML = '';
+          document.getElementById('category').value = file;
+          loadToolsFromFile(file);
+        });
+        suggestionBox.appendChild(item);
+      });
+    });
+  });
+
+  async function loadToolsFromFile(file) {
+    const res = await fetch(`/get_tools?category=${file}`);
+    const tools = await res.json();
+    const pricing = Array.from(document.querySelectorAll('input[name="pricing"]:checked')).map(c => c.value.toLowerCase());
+    const platform = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(c => c.value.toLowerCase());
+
+    let filtered = tools.filter(tool =>
+      (!pricing.length || pricing.includes(tool.pricing.toLowerCase())) &&
+      (!platform.length || platform.includes(tool.platform.toLowerCase()))
+    );
+
+    filtered.reverse();
+    const list = document.getElementById('tool-list');
+    list.innerHTML = '';
+    filtered.forEach(tool => {
+      const div = document.createElement('div');
+      div.className = 'tool-card';
+      div.innerHTML = `
+        <img src="${tool.banner}" alt="${tool.name}" onerror="this.src='https://via.placeholder.com/280x70?text=No+Image'">
+        <div><strong>${tool.name}</strong><br>${tool.title}</div>
+      `;
+      div.addEventListener('click', () => showToolDetail(tool));
+      list.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>

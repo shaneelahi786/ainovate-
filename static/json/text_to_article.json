@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Copy.ai",
+    "title": "AI writing assistant for marketing content",
+    "description": "Generate emails, blogs, and ads with one click.",
+    "banner": "https://images.charome.com/copyai.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "Tome",
+    "title": "AI storytelling and presentation builder",
+    "description": "Create stunning AI-powered presentations in minutes.",
+    "banner": "https://images.charome.com/tome.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "Suno AI",
+    "title": "Generate songs from text prompts",
+    "description": "Type your lyrics and get an AI-generated song.",
+    "banner": "https://images.charome.com/suno.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "KREA",
+    "title": "Real-time AI image generation",
+    "description": "Generate design ideas visually using real-time image generation.",
+    "banner": "https://images.charome.com/krea.jpg",
+    "pricing": "Free",
+    "platform": "Website"
+  },
+  {
+    "name": "Leonardo AI",
+    "title": "High-quality AI image creation",
+    "description": "Create stunning concept art and game assets with AI.",
+    "banner": "https://images.charome.com/leonardo.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  },
+  {
+    "name": "Rewind AI",
+    "title": "Search your digital life",
+    "description": "Automatically record everything you’ve seen, said, or heard on your device.",
+    "banner": "https://images.charome.com/rewind.jpg",
+    "pricing": "Paid",
+    "platform": "App"
+  },
+  {
+    "name": "Opus Clip",
+    "title": "Turn long videos into viral short clips",
+    "description": "AI-powered video editor that repurposes content into shorts.",
+    "banner": "https://images.charome.com/opus.jpg",
+    "pricing": "Freemium",
+    "platform": "Website"
+  }
+]
